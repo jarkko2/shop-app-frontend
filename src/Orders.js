@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import qs from 'qs';
-
-const headers = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Accept': 'application/x-www-form-urlencoded',
-    // Other headers you want to include
-  };
+import ShopItem from './ShopItem'
 
 function OrderList() {
   const [orders, setOrders] = useState([]);
@@ -36,12 +30,10 @@ function OrderList() {
             {order.owner}
             </span>
             {order.items.map(item => (
-            <li key={item._id}>
-              <span className="item-text">
-              {item.name}
-              </span>
-            </li>
+                <ShopItem item={item}/>
             ))}
+            <p>Total: {order.total}</p>
+            <p>Completed: {order.completed.toString()}</p>
         </li>
             
           

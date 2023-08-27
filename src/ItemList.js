@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ShopItem from './ShopItem'
 
 function ItemList({addItemToCart}) {
   const [items, setItems] = useState([]);
@@ -35,12 +36,10 @@ function ItemList({addItemToCart}) {
       <h1>Item List</h1>
       <ul>
         {items.map(item => (
-          <li key={item._id}>
-            <span className="item-text">
-            {item.name} | {item.price}€
-            </span>
+          <div>
+            <ShopItem item={item}/>
             <button className="shop-button" onClick={() => itemClicked(item._id)}>Add</button>
-        </li>
+          </div>
         ))}
       </ul>
     </div>
