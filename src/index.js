@@ -9,25 +9,29 @@ import {
 } from "react-router-dom";
 
 import Login from "./routes/login";
-
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 import ShopView from './routes/shopView';
 import OrderView from './routes/orderView';
 
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+import { GlobalProvider } from './GlobalContext';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route path="login" element={<Login />} />
-          <Route path="shopView" element={<ShopView />} />
-          <Route path="orderView" element={<OrderView />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>,
-  </React.StrictMode>
+  <GlobalProvider>
+    <React.StrictMode>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route path="login" element={<Login />} />
+            <Route path="shopView" element={<ShopView />} />
+            <Route path="orderView" element={<OrderView />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>,
+    </React.StrictMode>
+  </GlobalProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

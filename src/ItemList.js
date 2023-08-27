@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ShopItem from './ShopItem'
+import { useGlobal } from './GlobalContext';
 
 function ItemList() {
   const [items, setItems] = useState([]);
+  const { globalState, setGlobalState } = useGlobal();
 
   useEffect(() => {
     fetchData();
@@ -25,6 +27,7 @@ function ItemList() {
       });
       console.log('Item added to cart:', id);
       console.log(response)
+      setGlobalState(true)
     } catch (error) {
       console.error('Error adding item to cart:', error.response);
     }
