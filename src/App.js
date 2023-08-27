@@ -9,12 +9,12 @@ function App() {
             <nav>
                 <div className="navBar">
                     <div className="navBarLeft">
-                        <Cart />
-                    </div>
-                    <div className="navBarRight">
                         <Link to="/login">Login</Link> |
                         <Link to="/shopView"> ShopView</Link> |
                         <Link to="/orderView"> OrderView</Link>
+                    </div>
+                    <div className="navBarRight">
+                        <Cart />
                     </div>
                 </div>
             </nav>
