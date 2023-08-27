@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ShopItem from './ShopItem'
 
-function ItemList({addItemToCart}) {
+function ItemList() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -25,7 +25,6 @@ function ItemList({addItemToCart}) {
       });
       console.log('Item added to cart:', id);
       console.log(response)
-      addItemToCart(response.data.updatedCart);
     } catch (error) {
       console.error('Error adding item to cart:', error.response);
     }
