@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ShopItem from './ShopItem'
 
 function ShoppingList(itemAdded) {
   const [items, setItems] = useState([]);
@@ -45,12 +46,8 @@ function ShoppingList(itemAdded) {
       <ul>
         {items.map(item => (
             <div>
-               <li key={item._id}>
-                    <span className="item-text">
-                    {item.name} | {item.price}€
-                    </span>
-                    <button className="shop-button" onClick={() => itemClicked(item._id)}>Delete</button>
-                </li>
+              <ShopItem item={item}/>
+              <button className="shop-button" onClick={() => itemClicked(item._id)}>Delete</button>
             </div>
           
         ))}
