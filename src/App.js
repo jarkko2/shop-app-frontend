@@ -1,6 +1,5 @@
 import './App.css';
-import Login from './Login'
-import ParentComponent from './ParentComponent';
+import Cart from './Cart'
 import { Outlet, Link, useNavigate } from "react-router-dom";
 
 function App() {
@@ -15,7 +14,9 @@ function App() {
             </div>
           </div>
         </nav>
+        <Cart></Cart>
         <Outlet />
+        
       <header className="App-header"></header>
     </div>
   );
