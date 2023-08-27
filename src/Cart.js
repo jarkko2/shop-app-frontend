@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ShopItem from './ShopItem'
+import { useGlobal } from './GlobalContext';
 
 function ShoppingList(itemAdded) {
+  const { globalState, setGlobalState } = useGlobal();
+
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState(0);
   const [isDeleted, setDeleted] = useState(false);
 
   useEffect(() => {
     fetchData();
-  }, [isDeleted, itemAdded]);
+  }, [globalState, isDeleted]);
 
   useEffect(() => {
     if (isDeleted){
@@ -43,16 +46,16 @@ function ShoppingList(itemAdded) {
   return (
     <div>
       <h1>Shopping cart</h1>
-      <ul>
+      <ul className="shop-cart">
         {items.map(item => (
             <div>
               <ShopItem item={item}/>
               <button className="shop-button" onClick={() => itemClicked(item._id)}>Delete</button>
             </div>
           
-        ))}
-        <p>Total: {total}</p>
+        ))} 
       </ul>
+      <p>Total: {total}</p>
     </div>
   );
 }
