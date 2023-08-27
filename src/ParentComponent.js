@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ItemList from './ItemList';
 import Cart from './Cart';
+import Orders from './Orders'
 
 function ParentComponent() {
   const [itemAdded, setItemAdded] = useState(false);
@@ -19,6 +20,7 @@ function ParentComponent() {
     <div>
         <Cart itemAdded={itemAdded} />
         <ItemList addItemToCart={addItemToCart} />
+        <Orders/>
     </div>
   );
 }
