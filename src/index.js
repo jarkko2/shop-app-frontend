@@ -16,6 +16,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import { GlobalProvider } from './GlobalContext';
+import ShoppingList from './Cart';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -27,6 +28,7 @@ root.render(
             <Route path="login" element={<Login />} />
             <Route path="shopView" element={<ShopView />} />
             <Route path="orderView" element={<OrderView />} />
+            <Route path="cart" element={<ShoppingList />} />
           </Route>
         </Routes>
       </BrowserRouter>,
