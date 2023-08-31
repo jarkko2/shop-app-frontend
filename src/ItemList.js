@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ShopItem from './ShopItem'
+import ShopItem from './ItemComponents/ShopItem'
 import { useGlobal } from './GlobalContext';
 
 
