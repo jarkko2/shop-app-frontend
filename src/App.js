@@ -25,7 +25,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 
-const pages = ['login', 'shopView', 'orderView'];
+const pages = ['shopView', 'orderView'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function App() {

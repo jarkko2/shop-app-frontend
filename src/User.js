@@ -17,7 +17,7 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
-const settings = ['cart', 'Logout'];
+const settings = ['cart', 'logout'];
 const headers = {
     'Content-Type': 'application/x-www-form-urlencoded',
     'Accept': 'application/x-www-form-urlencoded',
@@ -39,6 +39,12 @@ export default function User() {
     };
 
     const navigateToPage = (page) => {
+        if (page == "logout")
+        {
+            handleLogout();
+            navigate(`/shopView`);
+            return;
+        }
         console.log("Navigating to " + page)
         navigate(`/${page}`);
     };
@@ -67,6 +73,23 @@ export default function User() {
         }
     }
 
+    const handleLogout = async (e) => {
+        try {
+            const response = await axios.post('http://localhost:5001/api/users/logout', qs.stringify({
+                // your data
+              }), {
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                withCredentials: true,
+              });
+          console.log(response)
+          window.location.reload(true)
+          // Handle successful logout (redirect or show a message)
+        } catch (error) {
+          console.error('Logout failed:', error.response);
+        }
+      };
 
     function LoggedInView() {
         return (
