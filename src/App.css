@@ -69,21 +69,3 @@
   display: flex;
   gap: 10px;
 }
-
-.shop-cart {
-  top: 20px;
-  bottom: 20px;
-  left: 20px;
-  right: 20px;
-  overflow: scroll;
-  margin: 0;
-  padding: 0;
-  height: 10em;
-  
-  border: 2px solid #ccc;
-  
-  font-size: 16px;
-  font-family: Arial, sans-serif;
-  
-  -webkit-overflow-scrolling: touch;
-}
