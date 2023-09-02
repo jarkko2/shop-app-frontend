@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 // Material UI
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';

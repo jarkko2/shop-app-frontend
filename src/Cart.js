@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import CartItem from './ItemComponents/CartItem'
 import { useGlobal } from './GlobalContext';
 import qs from 'qs';
-import Post from './Backend'
-
+import Post, {Put, Get} from './Backend'
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -27,20 +25,6 @@ import { ConstructionOutlined } from '@mui/icons-material';
 
 function ShoppingList(itemAdded) {
   const { globalState, setGlobalState } = useGlobal();
-
-  const [dense, setDense] = React.useState(false);
-  const [secondary, setSecondary] = React.useState(false);
-
-
-  function generate(element) {
-    return [0, 1, 2].map((value) =>
-      React.cloneElement(element, {
-        key: value,
-      }),
-    );
-  }
-
-
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState(0);
   const [isDeleted, setDeleted] = useState(false);
@@ -56,39 +40,19 @@ function ShoppingList(itemAdded) {
   })
 
   const fetchData = async () => {
-    try {
-      const response = await axios.get('http://localhost:5001/api/shoppingcart/names', { withCredentials: true })
-      console.log("shopping cart")
-      console.log(response.data.items)
-      setItems(response.data.items);
-      setTotal(response.data.total)
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+    Get('shoppingcart/names').then(responseData => {
+      setItems(responseData.items)
+      setTotal(responseData.total)
+    })
   };
 
   const itemClicked = async (id) => {
-    try {
-      const response = await axios.put('http://localhost:5001/api/shoppingcart/' + id, null, { withCredentials: true });
-      console.log('Item removed from cart:', id);
-      console.log(response)
+    Put('shoppingcart', id).then(responseData => {
       setDeleted(true)
-    } catch (error) {
-      console.error('Error removing item to cart:', error.response);
-    }
+    })
   };
 
   const placeOrder = async () => {
-    /*try {
-      const response = await axios.post('http://localhost:5001/api/shoppingcart/order', null, { withCredentials: true });
-      console.log("Placing order");
-      console.log(response);
-      setItems([]);
-      setTotal(0)
-    } catch (error) {
-      console.log("Failed to place order");
-      console.log(error);
-    }*/
     Post('shoppingcart/order').then(responseData => {
       setItems([]);
       setTotal(0)
@@ -96,16 +60,10 @@ function ShoppingList(itemAdded) {
   }
 
   const clearCart = async () => {
-    try {
-      const response = await axios.post('http://localhost:5001/api/shoppingcart/clear', null, { withCredentials: true });
-      console.log("Placing order");
-      console.log(response);
+    Post('shoppingcart/clear').then(responseData => {
       setItems([]);
       setTotal(0)
-    } catch (error) {
-      console.log("Failed to place order");
-      console.log(error);
-    }
+    })
   }
 
   return (
