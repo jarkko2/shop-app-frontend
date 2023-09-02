@@ -33,7 +33,8 @@ async function Post(path, data) {
             return response.data;
         } catch (error) {
             console.error('Error:', error);
-            throw error;
+            window.alert(error)
+            return false;
         }
     }
 }
@@ -50,7 +51,8 @@ export async function Put(path, data) {
             return response.data;
         } catch (error) {
             console.error('Error:', error);
-            throw error;
+            window.alert(error)
+            return false;
         }
     }
 }
@@ -67,7 +69,8 @@ export async function Get(path) {
             return response.data;
         } catch (error) {
             console.error('Error:', error);
-            throw error;
+            window.alert(error)
+            return false;
         }
     }
 }

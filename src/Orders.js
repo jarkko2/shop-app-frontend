@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ShopItem from './ItemComponents/ShopItem'
-import Post,{Get} from './Backend'
+import Post, { Get } from './Backend'
 
 function OrderList() {
   const [orders, setOrders] = useState([]);
@@ -11,7 +11,7 @@ function OrderList() {
 
   const fetchData = async () => {
     Get('orders/admin').then(responseData => {
-      setOrders(responseData.orders);
+      setOrders(responseData != false ? responseData.orders : []);   
     })
   };
 
@@ -22,16 +22,16 @@ function OrderList() {
         {orders.map(order => (
           <li key={order._id}>
             <span className="item-text">
-            {order.owner}
+              {order.owner}
             </span>
             {order.items.map(item => (
-                <ShopItem item={item}/>
+              <ShopItem item={item} />
             ))}
             <p>Total: {order.total}</p>
             <p>Completed: {order.completed.toString()}</p>
-        </li>
-            
-          
+          </li>
+
+
         ))}
       </ul>
     </div>
