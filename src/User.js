@@ -3,6 +3,7 @@ import axios from 'axios';
 import qs from 'qs';
 import './App.css';
 import { Outlet, Link, useNavigate } from "react-router-dom";
+import Post from './Backend'
 
 // Material UI
 import '@fontsource/roboto/300.css';
@@ -58,19 +59,10 @@ export default function User() {
     }, []); // Empty dependency array ensures it runs only once
 
 
-    const onlineCheck = async (e) => {
-        try {
-            const response = await axios.post('http://localhost:5001/api/users/onlinecheck', qs.stringify({
-            }), {
-                headers: headers,
-                withCredentials: true
-            });
-            console.log(response)
-            setEmail(response.data.user.username)
-            // Handle successful login (redirect or show a message)
-        } catch (error) {
-            console.error('Login failed:', error.response);
-        }
+    const onlineCheck = async () => {
+        Post('users/onlinecheck').then(responseData => {
+          setEmail(responseData.user ? responseData.user.username : "")
+        })
     }
 
     const handleLogout = async (e) => {

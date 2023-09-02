@@ -17,6 +17,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Post from './Backend'
 
 const defaultTheme = createTheme();
 
@@ -36,19 +37,10 @@ function Login() {
   }, []); // Empty dependency array ensures it runs only once
 
 
-  const onlineCheck = async (e) => {
-    try {
-      const response = await axios.post('http://localhost:5001/api/users/onlinecheck', qs.stringify({
-      }), {
-        headers: headers,
-        withCredentials: true
-      });
-      console.log(response)
-      setEmail(response.data.user.username)
-      // Handle successful login (redirect or show a message)
-    } catch (error) {
-      console.error('Login failed:', error.response);
-    }
+  const onlineCheck = async () => {
+    Post('users/onlinecheck').then(responseData => {
+      setEmail(responseData.user ? responseData.user.username : "")
+    })
   }
 
   const handleLogin = async (e) => {
@@ -146,13 +138,11 @@ function Login() {
     )
   }
 
-  if (email)
-  {
+  if (email) {
     navigate(`/shopView`);
     return;
   }
-  else
-  {
+  else {
     return (
       <div>
         <LoginForm />
