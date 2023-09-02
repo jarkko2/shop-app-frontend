@@ -41,8 +41,8 @@ function ShoppingList(itemAdded) {
 
   const fetchData = async () => {
     Get('shoppingcart/names').then(responseData => {
-      setItems(responseData.items)
-      setTotal(responseData.total)
+      setItems(responseData != false ? responseData.items : [])
+      setTotal(responseData != false ? responseData.total : 0)
     })
   };
 
