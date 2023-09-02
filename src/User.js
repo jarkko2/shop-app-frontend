@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import qs from 'qs';
 import './App.css';
 import { Outlet, Link, useNavigate } from "react-router-dom";
@@ -65,22 +64,10 @@ export default function User() {
         })
     }
 
-    const handleLogout = async (e) => {
-        try {
-            const response = await axios.post('http://localhost:5001/api/users/logout', qs.stringify({
-                // your data
-              }), {
-                headers: {
-                  'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                withCredentials: true,
-              });
-          console.log(response)
-          window.location.reload(true)
-          // Handle successful logout (redirect or show a message)
-        } catch (error) {
-          console.error('Logout failed:', error.response);
-        }
+    const handleLogout = async () => {
+        Post('users/logout').then(responseData => {
+            window.location.reload(true)
+        })
       };
 
     function LoggedInView() {

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import ShopItem from './ItemComponents/ShopItem'
 import { useGlobal } from './GlobalContext';
-
+import Post, {Get} from './Backend'
 
 // Material UI
 import AppBar from '@mui/material/AppBar';
@@ -33,25 +32,15 @@ function ItemList() {
   }, []);
 
   const fetchData = async () => {
-    try {
-      const response = await axios.get('http://localhost:5001/api/items/')
-      setItems(response.data.items);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+    Get('items').then(responseData => {
+      setItems(responseData.items)
+    })
   };
 
   const itemClicked = async (id) => {
-    try {   
-      const response = await axios.post('http://localhost:5001/api/shoppingcart/', { itemId: id }, {
-        withCredentials: true, // Important: Send cookies with the request
-      });
-      console.log('Item added to cart:', id);
-      console.log(response)
+    Post('shoppingcart', {itemId: id}).then(responseData => {
       setGlobalState(true)
-    } catch (error) {
-      console.error('Error adding item to cart:', error.response);
-    }
+    })
   };
 
   return (

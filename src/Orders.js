@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import ShopItem from './ItemComponents/ShopItem'
+import Post,{Get} from './Backend'
 
 function OrderList() {
   const [orders, setOrders] = useState([]);
@@ -10,14 +10,9 @@ function OrderList() {
   }, []);
 
   const fetchData = async () => {
-    try {
-        const response = await axios.get('http://localhost:5001/api/orders/admin', {withCredentials: true})
-        console.log("orders")
-        console.log(response.data.orders)
-        setOrders(response.data.orders);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+    Get('orders/admin').then(responseData => {
+      setOrders(responseData.orders);
+    })
   };
 
   return (

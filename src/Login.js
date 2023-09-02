@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import qs from 'qs';
 import { useNavigate } from "react-router-dom";
 
@@ -21,12 +20,6 @@ import Post from './Backend'
 
 const defaultTheme = createTheme();
 
-const headers = {
-  'Content-Type': 'application/x-www-form-urlencoded',
-  'Accept': 'application/x-www-form-urlencoded',
-  // Other headers you want to include
-};
-
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('')
@@ -46,26 +39,14 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
 
-    // Get data from form
     const data = new FormData(e.currentTarget);
-
     const username = data.get('username')
     const password = data.get('password')
 
-    try {
-      const response = await axios.post('http://localhost:5001/api/users/login/password', qs.stringify({
-        username,
-        password,
-      }), {
-        headers: headers,
-        withCredentials: true
-      });
-      console.log(response)
-      window.location.reload(true)
-      navigate(`/shopView`);
-    } catch (error) {
-      console.error('Login failed:', error.response);
-    }
+    Post('users/login/password', {username, password}).then(responseData => {
+      window.location.reload()
+      navigate('/shopView')
+    })
   };
 
   function LoginForm() {
