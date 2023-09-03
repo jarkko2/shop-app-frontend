@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import CartItem from './ItemComponents/CartItem'
-import { useGlobal } from './GlobalContext';
-import qs from 'qs';
 import Post, {Put, Get} from './Backend'
 
 import { styled } from '@mui/material/styles';
@@ -23,15 +21,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button'
 import { ConstructionOutlined } from '@mui/icons-material';
 
-function ShoppingList(itemAdded) {
-  const { globalState, setGlobalState } = useGlobal();
+function ShoppingList() {
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState(0);
   const [isDeleted, setDeleted] = useState(false);
 
   useEffect(() => {
     fetchData();
-  }, [globalState, isDeleted]);
+  }, [isDeleted]);
 
   useEffect(() => {
     if (isDeleted) {
