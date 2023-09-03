@@ -11,25 +11,23 @@ import {
 import Login from "./routes/login";
 import ShopView from './routes/shopView';
 import OrderView from './routes/orderView';
+import Cart from './routes/cart';
+import RegisterRoute from './routes/register';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
-import { GlobalProvider } from './GlobalContext';
-import ShoppingList from './Cart';
-
 
 // Reducer
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux'
 import { authenticationReducer } from './Reducer';
+
 export const store = configureStore({reducer: authenticationReducer})
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <GlobalProvider>
       <React.StrictMode>
         <BrowserRouter>
           <Routes>
@@ -37,12 +35,12 @@ root.render(
               <Route path="login" element={<Login />} />
               <Route path="shopView" element={<ShopView />} />
               <Route path="orderView" element={<OrderView />} />
-              <Route path="cart" element={<ShoppingList />} />
+              <Route path="cart" element={<Cart/>} />
+              <Route path="register" element={<RegisterRoute/>} />
             </Route>
           </Routes>
         </BrowserRouter>,
       </React.StrictMode>
-    </GlobalProvider>
   </Provider>
 );
 

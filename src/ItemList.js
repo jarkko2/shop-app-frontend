@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import ShopItem from './ItemComponents/ShopItem'
-import { useGlobal } from './GlobalContext';
 import Post, {Get} from './Backend'
 
 // Material UI
@@ -27,7 +26,6 @@ function ItemList() {
   const defaultTheme = createTheme();
 
   const [items, setItems] = useState([]);
-  const { globalState, setGlobalState } = useGlobal();
   const email = useSelector((state) => state.email)
 
   useEffect(() => {
@@ -42,7 +40,7 @@ function ItemList() {
 
   const itemClicked = async (id) => {
     Post('shoppingcart', {itemId: id}).then(responseData => {
-      setGlobalState(true)
+      console.log("Added " + responseData.item)
     })
   };
 
