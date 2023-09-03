@@ -20,5 +20,5 @@ export default function OnlineCheck() {
     }
 
     
-    return(<p>{email}</p>)
+    return(<></>)
 }

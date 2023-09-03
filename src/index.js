@@ -20,10 +20,10 @@ import ShoppingList from './Cart';
 
 
 // Reducer
-import { createStore } from 'redux'
+import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux'
 import { authenticationReducer } from './Reducer';
-export const store = createStore(authenticationReducer)
+export const store = configureStore({reducer: authenticationReducer})
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
