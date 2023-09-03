@@ -26,6 +26,7 @@ function ItemList() {
 
   const [items, setItems] = useState([]);
   const { globalState, setGlobalState } = useGlobal();
+  const [email, setEmail] = useState('')
 
   useEffect(() => {
     fetchData();
@@ -42,6 +43,20 @@ function ItemList() {
       setGlobalState(true)
     })
   };
+
+  
+  useEffect(() => {
+    // Call the onlineCheck function when the component is rendered
+    onlineCheck();
+  }, []); // Empty dependency array ensures it runs only once
+
+  const onlineCheck = async () => {
+    Post('users/onlinecheck').then(responseData => {
+      setEmail(responseData.user ? responseData.user.username : "")
+    })
+  }
+
+  const addToCartVisibility = email ? 'block' : 'none';
 
   return (
     <div>
@@ -72,7 +87,7 @@ function ItemList() {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" onClick={() => itemClicked(item._id)} key={Math.random()}>Add to cart</Button>
+                    <Button size="small" onClick={() => itemClicked(item._id)} key={Math.random()} sx={{ display: addToCartVisibility }}>Add to cart</Button>
                   </CardActions>
                 </Card>
               </Grid>
