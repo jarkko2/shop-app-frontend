@@ -39,6 +39,15 @@ async function Post(path, data) {
     }
 }
 
+/**
+ * This function calls backend with PUT method, automatically with credentials
+ * @param {string} path - Path to call, example: 'shoppingcart'.
+ * @param {object} data - Data to be sent, example: id
+ * @example
+ *  Put('shoppingcart', id).then(responseData => {
+      console.log("This is logged when call is completed, responseData contains received data")
+    })
+ */
 export async function Put(path, data) {
     {
         const callPath = backendApiPath + path
@@ -57,6 +66,14 @@ export async function Put(path, data) {
     }
 }
 
+/**
+ * This function calls backend with GET method, automatically with credentials
+ * @param {string} path - Path to call, example: 'orders/admin'.
+ * @example
+ *  Get('orders/admin').then(responseData => {
+      console.log("This is logged when call is completed, responseData contains received data")
+    })
+ */
 export async function Get(path) {
     {
         const callPath = backendApiPath + path
