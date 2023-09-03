@@ -17,13 +17,9 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
-const settings = ['cart', 'logout'];
-const headers = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Accept': 'application/x-www-form-urlencoded',
-    // Other headers you want to include
-};
+import { useSelector } from "react-redux";
 
+const settings = ['cart', 'logout'];
 
 export default function User() {
     const navigate = useNavigate();
@@ -50,20 +46,7 @@ export default function User() {
     };
     ///////////////////////
 
-    const [email, setEmail] = useState('')
-
-    useEffect(() => {
-        // Call the onlineCheck function when the component is rendered
-        onlineCheck();
-    }, []); // Empty dependency array ensures it runs only once
-
-
-    const onlineCheck = async () => {
-        Post('users/onlinecheck').then(responseData => {
-          setEmail(responseData.user ? responseData.user.username : "")
-        })
-    }
-
+    const email = useSelector((state) => state.email)
     const handleLogout = async () => {
         Post('users/logout').then(responseData => {
             window.location.reload(true)

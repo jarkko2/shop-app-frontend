@@ -18,22 +18,32 @@ import reportWebVitals from './reportWebVitals';
 import { GlobalProvider } from './GlobalContext';
 import ShoppingList from './Cart';
 
+
+// Reducer
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import { authenticationReducer } from './Reducer';
+export const store = createStore(authenticationReducer)
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <GlobalProvider>
-    <React.StrictMode>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />}>
-            <Route path="login" element={<Login />} />
-            <Route path="shopView" element={<ShopView />} />
-            <Route path="orderView" element={<OrderView />} />
-            <Route path="cart" element={<ShoppingList />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>,
-    </React.StrictMode>
-  </GlobalProvider>
+  <Provider store={store}>
+    <GlobalProvider>
+      <React.StrictMode>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<App />}>
+              <Route path="login" element={<Login />} />
+              <Route path="shopView" element={<ShopView />} />
+              <Route path="orderView" element={<OrderView />} />
+              <Route path="cart" element={<ShoppingList />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>,
+      </React.StrictMode>
+    </GlobalProvider>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

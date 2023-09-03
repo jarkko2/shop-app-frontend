@@ -21,12 +21,14 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import { useSelector } from "react-redux";
+
 function ItemList() {
   const defaultTheme = createTheme();
 
   const [items, setItems] = useState([]);
   const { globalState, setGlobalState } = useGlobal();
-  const [email, setEmail] = useState('')
+  const email = useSelector((state) => state.email)
 
   useEffect(() => {
     fetchData();
@@ -43,18 +45,6 @@ function ItemList() {
       setGlobalState(true)
     })
   };
-
-  
-  useEffect(() => {
-    // Call the onlineCheck function when the component is rendered
-    onlineCheck();
-  }, []); // Empty dependency array ensures it runs only once
-
-  const onlineCheck = async () => {
-    Post('users/onlinecheck').then(responseData => {
-      setEmail(responseData.user ? responseData.user.username : "")
-    })
-  }
 
   const addToCartVisibility = email ? 'block' : 'none';
 

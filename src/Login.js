@@ -17,24 +17,13 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Post from './Backend'
+import { useSelector } from 'react-redux'
 
 const defaultTheme = createTheme();
 
 function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('')
-
-  useEffect(() => {
-    // Call the onlineCheck function when the component is rendered
-    onlineCheck();
-  }, []); // Empty dependency array ensures it runs only once
-
-
-  const onlineCheck = async () => {
-    Post('users/onlinecheck').then(responseData => {
-      setEmail(responseData.user ? responseData.user.username : "")
-    })
-  }
+  const email = useSelector((state) => state.email)
 
   const handleLogin = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior

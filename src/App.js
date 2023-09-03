@@ -21,12 +21,9 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-
-import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
+import OnlineCheck from './OnlineCheck';
 
 const pages = ['shopView', 'orderView'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function App() {
     const navigate = useNavigate();
@@ -49,9 +46,9 @@ function App() {
     };
     ///////////////////////
 
-
     return (
         <div className="App">
+            <OnlineCheck/>
             <AppBar position="static">
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
@@ -140,12 +137,13 @@ function App() {
                                 </Button>
                             ))}
                         </Box>
-                        <User></User>
+                        <User></User>                
                     </Toolbar>
                 </Container>
             </AppBar>
             <Outlet />
         </div>
+
     );
 }
 
