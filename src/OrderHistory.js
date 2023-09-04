@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ShopItem from './ItemComponents/ShopItem'
 import Post, { Get } from './Backend'
-import Button from '@mui/material/Button';
 
-function OrderList() {
+function OrderHistoryList() {
   const [orders, setOrders] = useState([]);
   const[totalMoney, setTotalMoneyMade] = useState([]);
 
@@ -12,25 +11,16 @@ function OrderList() {
   }, []);
 
   const fetchData = async () => {
-    Get('orders/admin').then(responseData => {
-      console.log("Orders")
-      console.log(responseData.orders)
+    Get('orders/history').then(responseData => {
+      console.log(responseData)
       setOrders(responseData != false ? responseData.orders : []);
-      setTotalMoneyMade(responseData.totalMoneyMade)
+      setTotalMoneyMade(responseData.totalMoneySpent)
     })
   };
 
-  const handleToggleOrderAsCompleted = (id) =>
-  {
-    console.log(id)
-    Post('orders/admin/' + id).then(() => {
-      fetchData();
-    })
-  }
-
   return (
     <div>
-      <h1>Order List</h1>
+      <h1>Order history</h1>
       <ul>
         {orders.map(order => (
           <li key={order._id}>
@@ -40,11 +30,9 @@ function OrderList() {
             {order.items.map(item => (
               <ShopItem item={item} />
             ))}
-            <p>ID: {order.Id}</p>
             <p>Date: {order.date}</p>
             <p>Total: {order.total}</p>
             <p>Completed: {order.completed.toString()}</p>
-            <Button variant="contained" onClick={() => handleToggleOrderAsCompleted(order.Id)}>Toggle as completed</Button>
           </li>
         ))}
       </ul>
@@ -53,4 +41,4 @@ function OrderList() {
   );
 }
 
-export default OrderList;
+export default OrderHistoryList;

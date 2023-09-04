@@ -13,6 +13,7 @@ import ShopView from './routes/shopView';
 import OrderView from './routes/orderView';
 import Cart from './routes/cart';
 import RegisterRoute from './routes/register';
+import OrderHistoryView from './routes/orderhistory';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -37,6 +38,7 @@ root.render(
               <Route path="orderView" element={<OrderView />} />
               <Route path="cart" element={<Cart/>} />
               <Route path="register" element={<RegisterRoute/>} />
+              <Route path="orderhistory" element={<OrderHistoryView/>} />
             </Route>
           </Routes>
         </BrowserRouter>,
