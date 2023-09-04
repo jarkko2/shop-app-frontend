@@ -21,6 +21,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import ItemList from './ItemList'
+import Button from '@mui/material/Button';
+
 
 const drawerWidth = 240;
 
@@ -81,23 +83,15 @@ function ResponsiveDrawer(props) {
         return differentCategories
     }
 
-    const itemClicked = async (id) => {
-        Post('shoppingcart', { itemId: id }).then(responseData => {
-            console.log("Added " + responseData.item)
-        })
-    };
-
-    //const addToCartVisibility = email ? 'block' : 'none';
-
     const handleSortByPrice = () => {
-        const sortedItems = [...items].sort((a, b) => {
+        const sortedByPriceItems = [...sortedItems].sort((a, b) => {
             if (sortByPrice) {
                 return b.price - a.price; // Sort in descending order by price
             } else {
                 return a.price - b.price; // Sort in ascending order by price
             }
         });
-        setItems(sortedItems)
+        setSortedItems(sortedByPriceItems)
         setSortByPrice(!sortByPrice)
     }
 
@@ -184,6 +178,7 @@ function ResponsiveDrawer(props) {
                         <MenuIcon />
                     </IconButton>
                 </Toolbar>
+                <Button variant="text" onClick={() => handleSortByPrice()}>Sort by price</Button>
                 <ItemList items={sortedItems} />
             </Box>
         </Box>
