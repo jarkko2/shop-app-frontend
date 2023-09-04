@@ -29,7 +29,12 @@ function ResponsiveDrawer(props) {
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const handleDrawerToggle = () => {
+        console.log("Set mobile drawer " + !mobileOpen)
         setMobileOpen(!mobileOpen);
+    };
+    const handleDrawerSet = (state) => {
+        console.log("Set mobile drawer " + state)
+        setMobileOpen(state);
     };
 
     const container = window !== undefined ? () => window().document.body : undefined;
@@ -97,6 +102,7 @@ function ResponsiveDrawer(props) {
     }
 
     const handleCategorySort = (name) => {
+        handleDrawerSet(false)
         if (name === "all") {
             setSortedItems(items);
         } else {
@@ -110,6 +116,7 @@ function ResponsiveDrawer(props) {
     const drawer = (
         <div>
             <Toolbar />
+
             <Divider />
             <List>
                 {categories.map((text, index) => (
@@ -166,7 +173,17 @@ function ResponsiveDrawer(props) {
                 component="main"
                 sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
             >
-                <Toolbar />
+                <Toolbar>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={handleDrawerToggle}
+                        sx={{ mr: 2, display: { sm: 'none' } }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                </Toolbar>
                 <ItemList items={sortedItems} />
             </Box>
         </Box>
