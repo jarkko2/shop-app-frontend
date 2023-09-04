@@ -23,51 +23,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { useSelector } from "react-redux";
 
-function ItemList() {
+function ItemList({items}) {
   const defaultTheme = createTheme();
-
-  // All items, should not use anywhere than to store original state
-  const [items, setItems] = useState([]);
-
-  // Sorted items, can be modified
-  const [sortedItems, setSortedItems] = useState([]);
-
-  const [sortByPrice, setSortByPrice] = useState(false)
-  const [sortByCategory, setSortByCategory] = useState("")
-  const [categories, setCategories] = useState([])
-
   const email = useSelector((state) => state.email)
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-
-  }, [sortByPrice]);
-
-  const fetchData = async () => {
-    Get('items').then(responseData => {
-      setItems(responseData.items)
-      setSortedItems(responseData.items)
-      const differentCategories = SearchAllDifferentCategories(responseData.items)
-      console.log(differentCategories)
-      setCategories(differentCategories)
-      console.log(categories)
-    })
-  };
-
-  function SearchAllDifferentCategories(items)
-  {
-    let differentCategories = ["all"]
-    items.map((item) => {
-      if (!differentCategories.some((category) => category === item.category)) {
-        differentCategories = [...differentCategories, item.category]
-      }
-    })
-    return differentCategories
-  }
-
   const itemClicked = async (id) => {
     Post('shoppingcart', { itemId: id }).then(responseData => {
       console.log("Added " + responseData.item)
@@ -76,39 +34,14 @@ function ItemList() {
 
   const addToCartVisibility = email ? 'block' : 'none';
 
-  const handleSortByPrice = () => {
-    const sortedItems = [...items].sort((a, b) => {
-      if (sortByPrice) {
-        return b.price - a.price; // Sort in descending order by price
-      } else {
-        return a.price - b.price; // Sort in ascending order by price
-      }
-    });
-    setItems(sortedItems)
-    setSortByPrice(!sortByPrice)
-  }
-
-  const handleCategorySort = (name) => {
-    if (name === "all") {
-      setSortedItems(items);
-    } else {
-      const filteredItems = items.filter((item) => item.category === name);
-      setSortedItems(filteredItems);
-    }
-    setSortByCategory(name);
-  };
-  
-
   return (
     <div>
       <ThemeProvider theme={defaultTheme}>
-        <CategoryBar categories={categories} onCategoryBarSort={handleCategorySort}></CategoryBar>
         <CssBaseline />
         <main>
-          <Container sx={{ py: 4 }} maxWidth="lg">
-            <Button onClick={() => handleSortByPrice()}>Sort by price</Button>
+          <Container sx={{ py: 1 }} maxWidth="lg">
             <Grid container spacing={3}>
-              {sortedItems.map((item) => (
+              {items.map((item) => (
                 <Grid item key={item} xs={12} sm={6} md={4}>
                   <Card
                     sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
