@@ -28,14 +28,24 @@ function OrderList() {
     })
   }
 
+  const handleToggleAllOrdersAsCompleted = () => 
+  {
+     Post('orders/admin').then(() => {
+        console.log("Toggled all orders as completed")
+        fetchData();
+     })
+     
+  }
+
   return (
     <div>
       <h1>Order List</h1>
+      <Button variant="contained" onClick={() => handleToggleAllOrdersAsCompleted()}>Toggle all as completed</Button>
       <ul>
         {orders.map(order => (
           <li key={order._id}>
             <span className="item-text">
-              {order.owner}
+              Customer: {order.owner}
             </span>
             {order.items.map(item => (
               <ShopItem item={item} />
@@ -44,7 +54,7 @@ function OrderList() {
             <p>Date: {order.date}</p>
             <p>Total: {order.total}</p>
             <p>Completed: {order.completed.toString()}</p>
-            <Button variant="contained" onClick={() => handleToggleOrderAsCompleted(order.Id)}>Toggle as completed</Button>
+            <Button variant="contained" onClick={() => handleToggleOrderAsCompleted(order.Id)}>Toggle as {(!order.completed).toString()}</Button>
           </li>
         ))}
       </ul>
