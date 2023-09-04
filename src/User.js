@@ -19,7 +19,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 import { useSelector } from "react-redux";
 
-const settings = ['cart', 'logout'];
+const settings = ['cart', 'orderhistory', 'logout'];
 
 export default function User() {
     const navigate = useNavigate();

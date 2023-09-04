@@ -4,6 +4,7 @@ import Post, { Get } from './Backend'
 
 function OrderList() {
   const [orders, setOrders] = useState([]);
+  const[totalMoney, setTotalMoneyMade] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -11,7 +12,9 @@ function OrderList() {
 
   const fetchData = async () => {
     Get('orders/admin').then(responseData => {
-      setOrders(responseData != false ? responseData.orders : []);   
+      console.log(responseData)
+      setOrders(responseData != false ? responseData.orders : []);
+      setTotalMoneyMade(responseData.totalMoneyMade)
     })
   };
 
@@ -27,13 +30,13 @@ function OrderList() {
             {order.items.map(item => (
               <ShopItem item={item} />
             ))}
+            <p>Date: {order.date}</p>
             <p>Total: {order.total}</p>
             <p>Completed: {order.completed.toString()}</p>
           </li>
-
-
         ))}
       </ul>
+      <p>Total money made: {totalMoney}</p>
     </div>
   );
 }
