@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import CssBaseline from '@mui/material/CssBaseline';
 
 export default function NavigationBar() {
     const pages = ['shopView', 'orderView'];
@@ -38,7 +39,8 @@ export default function NavigationBar() {
     };
     ///////////////////////
     return (
-        <AppBar position="static">
+        <AppBar position="sticky" sx={{ zIndex: 'modal' }}>
+            <CssBaseline />
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ShopItem from './ItemComponents/ShopItem'
 import Post, { Get } from './Backend'
-import CategoryBar from './CategoryBar'
 
 // Material UI
 import AppBar from '@mui/material/AppBar';
@@ -37,7 +36,6 @@ function ItemList({items}) {
   return (
     <div>
       <ThemeProvider theme={defaultTheme}>
-        <CssBaseline />
         <main>
           <Container sx={{ py: 1 }} maxWidth="lg">
             <Grid container spacing={3}>
