@@ -37,6 +37,11 @@ function OrderList() {
      
   }
 
+  const Status = {
+    true: "completed",
+    false: "incompleted",
+  };
+
   return (
     <div>
       <h1>Order List</h1>
@@ -54,7 +59,7 @@ function OrderList() {
             <p>Date: {order.date}</p>
             <p>Total: {order.total}</p>
             <p>Completed: {order.completed.toString()}</p>
-            <Button variant="contained" onClick={() => handleToggleOrderAsCompleted(order.Id)}>Toggle as {(!order.completed).toString()}</Button>
+            <Button variant="contained" onClick={() => handleToggleOrderAsCompleted(order.Id)}>Toggle as {Status[order.completed]}</Button>
           </li>
         ))}
       </ul>
