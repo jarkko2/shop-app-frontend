@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ShopItem from './ItemComponents/ShopItem'
 import Post, { Get } from './Backend'
-import CategoryItem from './ItemComponents/CategoryItem';
+import CategoryBar from './CategoryBar'
 
 // Material UI
 import AppBar from '@mui/material/AppBar';
@@ -50,18 +50,23 @@ function ItemList() {
     Get('items').then(responseData => {
       setItems(responseData.items)
       setSortedItems(responseData.items)
-      let differentCategories = []
-      responseData.items.map((item) => {
-        if (!differentCategories.some((category) => category === item.category)) {
-          differentCategories = [...differentCategories, item.category]
-        }
-      })
-      differentCategories = [...differentCategories, "all"]
+      const differentCategories = SearchAllDifferentCategories(responseData.items)
       console.log(differentCategories)
       setCategories(differentCategories)
       console.log(categories)
     })
   };
+
+  function SearchAllDifferentCategories(items)
+  {
+    let differentCategories = ["all"]
+    items.map((item) => {
+      if (!differentCategories.some((category) => category === item.category)) {
+        differentCategories = [...differentCategories, item.category]
+      }
+    })
+    return differentCategories
+  }
 
   const itemClicked = async (id) => {
     Post('shoppingcart', { itemId: id }).then(responseData => {
@@ -97,15 +102,11 @@ function ItemList() {
   return (
     <div>
       <ThemeProvider theme={defaultTheme}>
+        <CategoryBar categories={categories} onCategoryBarSort={handleCategorySort}></CategoryBar>
         <CssBaseline />
         <main>
           <Container sx={{ py: 4 }} maxWidth="lg">
             <Button onClick={() => handleSortByPrice()}>Sort by price</Button>
-
-            {categories.map((item) => (
-                <CategoryItem item={item} onCategorySort={handleCategorySort}></CategoryItem>
-            ))}
-
             <Grid container spacing={3}>
               {sortedItems.map((item) => (
                 <Grid item key={item} xs={12} sm={6} md={4}>
