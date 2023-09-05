@@ -9,7 +9,7 @@ import Grid from '@mui/material/Grid';
 
 import ShopItem from './ShopItem'
 
-export default function OrderItem({ order, onHandleToggleButtonClicked }) {
+export default function OrderItem({ order, onHandleToggleButtonClicked, disableSwitch = false }) {
     const handleToggleOrderAsCompleted = (id) => {
         onHandleToggleButtonClicked(id)
     }
@@ -34,7 +34,7 @@ export default function OrderItem({ order, onHandleToggleButtonClicked }) {
                 <Typography variant="body2">
                     <p>Total: {order.total}</p>
                 </Typography>
-                Completed <Switch checked={order.completed} onClick={() => handleToggleOrderAsCompleted(order.Id)} />
+                Completed <Switch checked={order.completed} onClick={() => handleToggleOrderAsCompleted(order.Id)} disabled={disableSwitch}/>
             </CardContent>
         </Card>
     );
