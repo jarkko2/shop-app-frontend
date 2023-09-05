@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CartItem from './ItemComponents/CartItem'
-import Post, {Put, Get} from './Backend'
+import Post, { Put, Get } from './Backend'
+import ShopItem from './ItemComponents/ShopItem'
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -63,21 +64,43 @@ function ShoppingList() {
     })
   }
 
+
+  const itemDetails = {};
+
+  items.forEach((item) => {
+    const itemName = item.name;
+    const itemPrice = item.price;
+    const itemId = item._id
+
+    if (itemDetails[itemName]) {
+      itemDetails[itemName].count++;
+      itemDetails[itemName].totalPrice += itemPrice;
+    } else {
+      itemDetails[itemName] = {
+        count: 1,
+        totalPrice: itemPrice,
+        id: itemId
+      };
+    }
+  });
+
+  const duplicateItemsOutput = Object.entries(itemDetails).map(([itemName, details]) => (
+    <ListItem key={details.id} secondaryAction={
+      <IconButton edge="end" aria-label="delete" onClick={() => itemClicked(details.id)}>
+        <DeleteIcon />
+      </IconButton>
+    }>
+      <CartItem itemName={itemName} details={details} />
+    </ListItem>
+  ));
+
+
   return (
     <main>
       <h1>Shopping cart</h1>
       <Box sx={{ flexGrow: 1, paddingRight: '25%', paddingLeft: '25%' }}>
         <List dense={5}>
-          {items.map((item) => (
-
-            <ListItem key={item._id} secondaryAction={
-              <IconButton edge="end" aria-label="delete" onClick={() => itemClicked(item._id)}>
-                <DeleteIcon />
-              </IconButton>
-            }>
-              <CartItem item={item} />
-            </ListItem>
-          ))}
+          {duplicateItemsOutput}
         </List>
         <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
           Total: {total}
