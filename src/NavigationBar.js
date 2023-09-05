@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import User from './User'
+import { useSelector } from "react-redux";
 
 // Material UI
 import AppBar from '@mui/material/AppBar';
@@ -17,7 +18,8 @@ import AdbIcon from '@mui/icons-material/Adb';
 import CssBaseline from '@mui/material/CssBaseline';
 
 export default function NavigationBar() {
-    const pages = ['shopView', 'orderView'];
+    let pages = ['shopView',];
+    let adminPages = ['orderView']
 
     const navigate = useNavigate();
 
@@ -38,6 +40,13 @@ export default function NavigationBar() {
         handleCloseNavMenu();
     };
     ///////////////////////
+
+    const role = useSelector((state) => state.role)
+    useMemo(() => {
+        if (role === "admin") { pages = [...pages, adminPages] }
+    }, [pages]);
+
+
     return (
         <AppBar position="sticky" sx={{ zIndex: 'modal' }}>
             <CssBaseline />
