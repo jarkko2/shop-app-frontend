@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import ShopItem from './ItemComponents/ShopItem'
 import Post, { Get } from './Backend'
+import OrderItem from './ItemComponents/OrderItem'
 import Button from '@mui/material/Button';
+
+// Material UI
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 
 function OrderList() {
   const [orders, setOrders] = useState([]);
-  const[totalMoney, setTotalMoneyMade] = useState([]);
+  const [totalMoney, setTotalMoneyMade] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -20,50 +26,31 @@ function OrderList() {
     })
   };
 
-  const handleToggleOrderAsCompleted = (id) =>
-  {
+  const handleToggleOrderAsCompleted = (id) => {
     console.log(id)
     Post('orders/admin/' + id).then(() => {
       fetchData();
     })
   }
 
-  const handleToggleAllOrdersAsCompleted = () => 
-  {
-     Post('orders/admin').then(() => {
-        console.log("Toggled all orders as completed")
-        fetchData();
-     })
-     
-  }
+  const handleToggleAllOrdersAsCompleted = () => {
+    Post('orders/admin').then(() => {
+      console.log("Toggled all orders as completed")
+      fetchData();
+    })
 
-  const Status = {
-    true: "completed",
-    false: "incompleted",
-  };
+  }
 
   return (
     <div>
       <h1>Order List</h1>
-      <Button variant="contained" onClick={() => handleToggleAllOrdersAsCompleted()}>Toggle all as completed</Button>
-      <ul>
-        {orders.map(order => (
-          <li key={order._id}>
-            <span className="item-text">
-              Customer: {order.owner}
-            </span>
-            {order.items.map(item => (
-              <ShopItem item={item} />
-            ))}
-            <p>ID: {order.Id}</p>
-            <p>Date: {order.date}</p>
-            <p>Total: {order.total}</p>
-            <p>Completed: {order.completed.toString()}</p>
-            <Button variant="contained" onClick={() => handleToggleOrderAsCompleted(order.Id)}>Toggle as {Status[order.completed]}</Button>
-          </li>
-        ))}
-      </ul>
-      <p>Total money made: {totalMoney}</p>
+      <Button variant="contained" color="warning" onClick={() => handleToggleAllOrdersAsCompleted()}>Toggle all as completed</Button>
+      <Container sx={{ py: 4 }} maxWidth="lg">
+          {orders.map(order => (
+            <OrderItem order={order} onHandleToggleButtonClicked={handleToggleOrderAsCompleted}></OrderItem>
+          ))}
+        <p>Total money made: {totalMoney}</p>
+      </Container>
     </div>
   );
 }
