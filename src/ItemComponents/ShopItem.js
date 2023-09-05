@@ -1,9 +1,8 @@
-export default function ShopItem(item){
-    const shopItem = item.item
+export default function ShopItem({itemName, details}){
     return(
-        <div key={shopItem._id}>
+        <div>
             <span className="item-text">
-                {shopItem.name} | {shopItem.price}€
+                {itemName} | x {details.count} | ${details.totalPrice.toFixed(2)}
             </span>
         </div>
     );

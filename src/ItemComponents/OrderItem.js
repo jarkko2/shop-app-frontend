@@ -14,6 +14,30 @@ export default function OrderItem({ order, onHandleToggleButtonClicked, disableS
         onHandleToggleButtonClicked(id)
     }
 
+    const itemDetails = {};
+
+    order.items.forEach((item) => {
+        const itemName = item.name;
+        const itemPrice = item.price;
+    
+        if (itemDetails[itemName]) {
+          itemDetails[itemName].count++;
+          itemDetails[itemName].totalPrice += itemPrice;
+        } else {
+          itemDetails[itemName] = {
+            count: 1,
+            totalPrice: itemPrice,
+          };
+        }
+      });
+    
+
+      const duplicateItemsOutput = Object.entries(itemDetails).map(([itemName, details]) => (
+        <div key={itemName}>
+          <ShopItem itemName={itemName} details={details} />
+        </div>
+      ));
+
     const card = (
         <Card sx={{ minWidth: 300, margin: 5}}>
             <CardContent>
@@ -21,10 +45,9 @@ export default function OrderItem({ order, onHandleToggleButtonClicked, disableS
                     {order.owner}
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    {order.items.map(item => (
-                        <ShopItem item={item} />
-                    ))}
+                    {duplicateItemsOutput}
                 </Typography>
+                
                 <Typography variant="body2">
                     ID: {order.Id}
                 </Typography>
