@@ -31,9 +31,6 @@ export default function CartItem({itemName, details}) {
                 primary={itemName}
                 secondary={details.totalPrice}
             />
-            <ListItemText
-                primary={details.count}
-            />
         </>
     );
 

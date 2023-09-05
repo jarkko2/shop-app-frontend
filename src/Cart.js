@@ -19,6 +19,8 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button'
 import { ConstructionOutlined } from '@mui/icons-material';
 
@@ -50,6 +52,19 @@ function ShoppingList() {
     })
   };
 
+  const itemClickedRemoveAll = async (id) => {
+    Put('shoppingcart/removeall', id).then(responseData => {
+      setDeleted(true)
+    })
+  };
+
+  const itemClickedAdd = async (id) => {
+    Post('shoppingcart', { itemId: id }).then(responseData => {
+      console.log("Added " + responseData.item)
+      setDeleted(true)
+    })
+  };
+
   const placeOrder = async () => {
     Post('shoppingcart/order').then(responseData => {
       setItems([]);
@@ -64,6 +79,12 @@ function ShoppingList() {
     })
   }
 
+  // Sort items by itemName
+  items.sort((a, b) => {
+    if (a.name < b.name) return -1;
+    if (a.name > b.name) return 1;
+    return 0;
+  });
 
   const itemDetails = {};
 
@@ -85,12 +106,20 @@ function ShoppingList() {
   });
 
   const duplicateItemsOutput = Object.entries(itemDetails).map(([itemName, details]) => (
-    <ListItem key={details.id} secondaryAction={
-      <IconButton edge="end" aria-label="delete" onClick={() => itemClicked(details.id)}>
+    <ListItem key={details.id}>
+      <CartItem itemName={itemName} details={details} />
+      <IconButton edge="end" aria-label="delete" onClick={() => itemClicked(details.id)} sx={{margin: 2}}>
+        <RemoveIcon />
+      </IconButton>
+      <Typography gutterBottom variant="h6" component="h2">
+                        {details.count}
+                      </Typography>
+      <IconButton edge="end" aria-label="delete" onClick={() => itemClickedAdd(details.id)} sx={{margin: 2}}>
+        <AddIcon />
+      </IconButton>
+      <IconButton edge="end" aria-label="delete" onClick={() => itemClickedRemoveAll(details.id)} sx={{margin: 2}}>
         <DeleteIcon />
       </IconButton>
-    }>
-      <CartItem itemName={itemName} details={details} />
     </ListItem>
   ));
 
