@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import ShopItem from './ItemComponents/ShopItem'
 import Post, { Get } from './Backend'
+import OrderItem from './ItemComponents/OrderItem'
+
+// Material UI
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
 
 function OrderHistoryList() {
   const [orders, setOrders] = useState([]);
@@ -18,25 +23,19 @@ function OrderHistoryList() {
     })
   };
 
+  const handleToggleOrderAsCompleted = (id) => {
+    console.log(id)
+  }
+
   return (
     <div>
       <h1>Order history</h1>
-      <ul>
-        {orders.map(order => (
-          <li key={order._id}>
-            <span className="item-text">
-              {order.owner}
-            </span>
-            {order.items.map(item => (
-              <ShopItem item={item} />
-            ))}
-            <p>Date: {order.date}</p>
-            <p>Total: {order.total}</p>
-            <p>Completed: {order.completed.toString()}</p>
-          </li>
-        ))}
-      </ul>
-      <p>Total money made: {totalMoney}</p>
+      <Container sx={{ py: 4 }} maxWidth="lg">
+          {orders.map(order => (
+            <OrderItem order={order} onHandleToggleButtonClicked={handleToggleOrderAsCompleted} disableSwitch={true} ></OrderItem>
+          ))}
+        <p>Total money spent: {totalMoney}</p>
+      </Container>
     </div>
   );
 }
