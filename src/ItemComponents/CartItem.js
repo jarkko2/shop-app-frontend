@@ -17,9 +17,9 @@ import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
 import InventoryIcon from '@mui/icons-material/Inventory';
 
-export default function CartItem(item) {
-    const shopItem = item.item
-
+export default function CartItem({itemName, details}) {
+    console.log("Shop item details")
+    console.log(details)
     return (
         <>
             <ListItemAvatar>
@@ -28,8 +28,11 @@ export default function CartItem(item) {
                 </Avatar>
             </ListItemAvatar>
             <ListItemText
-                primary={shopItem.name}
-                secondary={shopItem.price}
+                primary={itemName}
+                secondary={details.totalPrice}
+            />
+            <ListItemText
+                primary={details.count}
             />
         </>
     );
