@@ -18,6 +18,14 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Post from './Backend'
 import { useSelector } from 'react-redux'
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const defaultTheme = createTheme();
 
@@ -32,10 +40,38 @@ function Login() {
     const username = data.get('username')
     const password = data.get('password')
 
-    Post('users/login/password', {username, password}).then(responseData => {
-      window.location.reload()
-      navigate('/shopView')
+    if (username === "" || password === "") {
+      handleClick("Username or password empty")
+      return
+    }
+
+    Post('users/login/password', { username, password }).then(responseData => {
+      console.log(responseData)
+      if (responseData) {
+        window.location.reload()
+        navigate('/shopView')
+      }
+      else {
+        handleClick("Wrong username or password")
+      }
+
     })
+  };
+
+  const [open, setOpen] = React.useState(false);
+  const [error, setErrorMessage] = React.useState("");
+
+  const handleClick = (errormessage) => {
+    setOpen(true);
+    setErrorMessage(errormessage)
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
   };
 
   function LoginForm() {
@@ -95,6 +131,11 @@ function Login() {
             </Box>
           </Box>
         </Container>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+            {error}
+          </Alert>
+        </Snackbar>
       </ThemeProvider>
     )
   }
