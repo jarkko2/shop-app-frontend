@@ -24,9 +24,10 @@ const settings = ['cart', 'orderhistory', 'logout'];
 export default function User() {
     const navigate = useNavigate();
     // Material UI // 
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
 
     const handleOpenUserMenu = (event) => {
+        console.log(event.currentTarget)
         setAnchorElUser(event.currentTarget);
     };
 
@@ -35,8 +36,7 @@ export default function User() {
     };
 
     const navigateToPage = (page) => {
-        if (page == "logout")
-        {
+        if (page == "logout") {
             handleLogout();
             navigate(`/shopView`);
             return;
@@ -51,11 +51,10 @@ export default function User() {
         Post('users/logout').then(responseData => {
             window.location.reload(true)
         })
-      };
+    };
 
-    function LoggedInView() {
+    if (email) {
         return (
-
             <div>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar alt={email.toUpperCase()} src="/static/images/avatar/2.jpg" />
@@ -77,18 +76,12 @@ export default function User() {
                     onClose={handleCloseUserMenu}
                 >
                     {settings.map((setting) => (
-                        <MenuItem key={setting}  onClick={() => navigateToPage(setting)}>
+                        <MenuItem key={setting} onClick={() => navigateToPage(setting)}>
                             <Typography textAlign="center">{setting}</Typography>
                         </MenuItem>
                     ))}
                 </Menu>
             </div>
-        );
-    }
-
-    if (email) {
-        return (
-            <LoggedInView />
         );
     } else {
         return (
