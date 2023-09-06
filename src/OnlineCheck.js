@@ -16,9 +16,10 @@ export default function OnlineCheck() {
 
     function PostOnlineCheck(){
         Post('users/onlinecheck').then(responseData => {
+            console.log(responseData)
             dispatch(setEmailReducer(responseData.user ? responseData.user.username : ""))
             dispatch(setRoleReducer(responseData.user ? responseData.role : ""))
-            setEmail(email)     
+            setEmail(email)
             setRole(responseData.role)
         })
     }
